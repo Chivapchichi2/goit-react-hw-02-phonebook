@@ -2,31 +2,51 @@ import React, { Component } from 'react';
 import { v4 as uid } from 'uuid';
 import Contacts from './Contacts';
 import Container from './Container';
+import Filter from './Filter';
 import Header from './Header';
 import Notification from './Notification';
 import Section from './Section';
 
+const INITIAL_STATE = {
+  filter: '',
+  name: '',
+  number: ''
+};
+
 class App extends Component {
   state = {
+    ...INITIAL_STATE,
     contacts: [],
-    name: '',
-    number: ''
   };
 
   handelInputChange = e => {
     const { value, name } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   handelFormSubmit = e => {
     e.preventDefault();
     const { contacts, name, number } = this.state;
     const id = uid();
-    this.setState({ contacts: [{ name, number, id  }, ...contacts], name: '', number: ''});
+    this.setState({ contacts: [{ name, number, id }, ...contacts], ...INITIAL_STATE });
+  };
+
+  changeFilter = e => {
+    const { value } = e.target;
+    this.setState({ filter: value });
+  };
+
+  getFilteredContacts = () => {
+    const { filter, contacts } = this.state;
+    const cleanFilter = filter.toLowerCase();
+    return contacts
+      .filter(contact => contact.name.toLowerCase().includes(cleanFilter))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   render() {
-    const { name, contacts, number } = this.state;
+    const { name, contacts, number, filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
     return (
       <Container>
         <Header />
@@ -62,8 +82,12 @@ class App extends Component {
           </form>
         </Section>
         <Section title="Contacts">
-          {contacts[0] ? <Contacts
-            contacts={contacts} /> : <Notification message="No contacts added"/>}
+          {contacts[0] ? <Filter
+            value={filter}
+            onFilter={this.changeFilter} /> : <Notification message="No contacts added" />}
+          {contacts[0] && !filteredContacts[0] && <Notification message="No contact found"/>}
+          {filteredContacts[0] && <Contacts
+            contacts={filteredContacts} /> }
         </Section>
       </Container>
     );
