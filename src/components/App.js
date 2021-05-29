@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 import { v4 as uid } from 'uuid';
+import Contacts from './Contacts';
 import Container from './Container';
 import Header from './Header';
+import Notification from './Notification';
 import Section from './Section';
-import Contacts from './Contacts';
 
 class App extends Component {
   state = {
     contacts: [],
-    name: ''
+    name: '',
+    number: ''
   };
 
   handelInputChange = e => {
-    const { value } = e.target;
-    this.setState({ name: value });
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
   }
 
   handelFormSubmit = e => {
     e.preventDefault();
-    const { contacts, name } = this.state;
-    this.setState({ contacts: [{ name, id: uid() }, ...contacts], name: '' });
+    const { contacts, name, number } = this.state;
+    const id = uid();
+    this.setState({ contacts: [{ name, number, id  }, ...contacts], name: '', number: ''});
   }
 
   render() {
-    const { name, contacts } = this.state;
+    const { name, contacts, number } = this.state;
     return (
       <Container>
         <Header />
@@ -41,18 +44,43 @@ class App extends Component {
                 onChange={this.handelInputChange}
               />
             </label>
+            <label>
+              Number:
+              <input
+                type="tel"
+                name="number"
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+                required
+                value={ number }
+                onChange={this.handelInputChange}
+              />
+            </label>
             <button type="submit">
               Add Contact
             </button>
           </form>
         </Section>
-        {contacts.length > 0 && <Section title="Contacts">
-          <Contacts contacts={ contacts }/>
-        </Section>}
-
+        <Section title="Contacts">
+          {contacts[0] ? <Contacts
+            contacts={contacts} /> : <Notification message="No contacts added"/>}
+        </Section>
       </Container>
     );
   }
 }
 
 export default App;
+
+
+// state = {
+//   contacts: [
+//     {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+//     {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+//     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+//     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+//   ],
+//   filter: '',
+//   name: '',
+//   number: ''
+// }
