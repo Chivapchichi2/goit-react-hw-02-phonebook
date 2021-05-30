@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { v4 as uid } from 'uuid';
-import Contacts from './Contacts';
+import ContactList from './ContactList';
 import Container from './Container';
 import Filter from './Filter';
 import Header from './Header';
@@ -44,6 +44,12 @@ class App extends Component {
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  deleteContact = (idContact) => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(({id}) => id !== idContact)
+    }))
+  }
+
   render() {
     const { name, contacts, number, filter } = this.state;
     const filteredContacts = this.getFilteredContacts();
@@ -82,12 +88,17 @@ class App extends Component {
           </form>
         </Section>
         <Section title="Contacts">
-          {contacts[0] ? <Filter
-            value={filter}
-            onFilter={this.changeFilter} /> : <Notification message="No contacts added" />}
-          {contacts[0] && !filteredContacts[0] && <Notification message="No contact found"/>}
-          {filteredContacts[0] && <Contacts
-            contacts={filteredContacts} /> }
+          { contacts[0] ?
+            <Filter
+              value={filter}
+              onFilter={this.changeFilter} /> :
+            <Notification
+              message="No contacts added" /> }
+          { contacts[0] && !filteredContacts[0] && <Notification
+            message="No contact found" /> }
+          { filteredContacts[0] && <ContactList
+            contacts={filteredContacts}
+            onDelete={ this.deleteContact }/>}
         </Section>
       </Container>
     );
