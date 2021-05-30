@@ -14,8 +14,20 @@ class App extends Component {
       contacts: [],
   };
 
-  addContact = ({ name, number }) => {
+  addContact = ([name, number]) => {
       const { contacts } = this.state;
+      if (contacts.some((contact) => contact.name === name)) {
+      // eslint-disable-next-line
+      alert(
+              `${name
+                  .split(' ')
+                  .map((string) => string.charAt(0).toUpperCase() + string.slice(1))
+                  .join(
+                      ' ',
+                  )} is already in contacts. Change contact's name or delete old.`,
+          );
+          return;
+      }
       const id = uid();
       this.setState({
           contacts: [{ name, number, id }, ...contacts],
@@ -32,8 +44,8 @@ class App extends Component {
       const { filter, contacts } = this.state;
       const cleanFilter = filter.toLowerCase();
       return contacts
-          .filter((contact) => contact.name.toLowerCase().includes(cleanFilter))
-          .sort((a, b) => a.name.localeCompare(b.name));
+          .filter((contact) => contact.name.includes(cleanFilter))
+          .sort((a, b) => a.name.localeCompare(b.name)); // сортируем контакты по алфавиту
   };
 
   deleteContact = (idContact) => {
