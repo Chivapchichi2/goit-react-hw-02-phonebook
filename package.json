@@ -26,12 +26,6 @@
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
