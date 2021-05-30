@@ -10,66 +10,66 @@ import Section from './Section';
 
 class App extends Component {
   state = {
-      filter: '',
-      contacts: [],
+    filter: '',
+    contacts: [],
   };
 
   addContact = ({ name, number }) => {
-      const { contacts } = this.state;
-      const id = uid();
-      this.setState({
-          contacts: [{ name, number, id }, ...contacts],
-          filter: '',
-      });
+    const { contacts } = this.state;
+    const id = uid();
+    this.setState({
+      contacts: [{ name, number, id }, ...contacts],
+      filter: '',
+    });
   };
 
   changeFilter = e => {
-      const { value } = e.target;
-      this.setState({ filter: value });
+    const { value } = e.target;
+    this.setState({ filter: value });
   };
 
   getFilteredContacts = () => {
-      const { filter, contacts } = this.state;
-      const cleanFilter = filter.toLowerCase();
-      return contacts
-          .filter(contact => contact.name.toLowerCase().includes(cleanFilter))
-          .sort((a, b) => a.name.localeCompare(b.name));
+    const { filter, contacts } = this.state;
+    const cleanFilter = filter.toLowerCase();
+    return contacts
+      .filter(contact => contact.name.toLowerCase().includes(cleanFilter))
+      .sort((a, b) => a.name.localeCompare(b.name));
   };
 
   deleteContact = idContact => {
-      this.setState(prevState => ({
-          contacts: prevState.contacts.filter(({ id }) => id !== idContact),
-      }));
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(({ id }) => id !== idContact),
+    }));
   };
 
   render() {
-      const { contacts, filter } = this.state;
-      const filteredContacts = this.getFilteredContacts();
+    const { contacts, filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
 
-      return (
-          <Container>
-              <Header />
-              <Section title="Phone book">
-                  <ContactForm onSubmit={this.addContact} />
-              </Section>
-              <Section title="Contacts">
-                  {contacts[0] ? (
-                      <Filter value={filter} onFilter={this.changeFilter} />
-                  ) : (
-                      <Notification message="No contacts added" />
-                  )}
-                  {contacts[0] && !filteredContacts[0] && (
-                      <Notification message="No contact found" />
-                  )}
-                  {filteredContacts[0] && (
-                      <ContactList
-                          contacts={filteredContacts}
-                          onDelete={this.deleteContact12}
-                      />
-                  )}
-              </Section>
-          </Container>
-      );
+    return (
+      <Container>
+        <Header />
+        <Section title="Phone book">
+          <ContactForm onSubmit={this.addContact} />
+        </Section>
+        <Section title="Contacts">
+          {contacts[0] ? (
+            <Filter value={filter} onFilter={this.changeFilter} />
+          ) : (
+            <Notification message="No contacts added" />
+          )}
+          {contacts[0] && !filteredContacts[0] && (
+            <Notification message="No contact found" />
+          )}
+          {filteredContacts[0] && (
+            <ContactList
+              contacts={filteredContacts}
+              onDelete={this.deleteContact2}
+            />
+          )}
+        </Section>
+      </Container>
+    );
   }
 }
 

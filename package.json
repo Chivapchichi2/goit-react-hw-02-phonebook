@@ -26,9 +26,12 @@
     "prepare": "husky install"
   },
   "eslintConfig": {
+    "plugins": [
+      "react"
+    ],
     "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
+      "eslint:all",
+      "plugin:react/all"
     ]
   },
   "browserslist": {
