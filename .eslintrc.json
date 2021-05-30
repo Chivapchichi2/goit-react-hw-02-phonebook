@@ -6,8 +6,8 @@
       "jsx": true
     }
   },
-  "parser": "babel-eslint",
-  "rules": {
-    "indent": ["warn", 4]
-  }
+  "parser": "babel-eslint"
+  // "rules": {
+  //   "indent": ["warn", 4]
+  // }
 }
