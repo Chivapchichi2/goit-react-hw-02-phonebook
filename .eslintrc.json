@@ -15,8 +15,10 @@
     "react/destructuring-assignment": "off",
     "react/state-in-constructor": "off",
     "react/jsx-filename-extension": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "no-nested-ternary": "warn",
     "react/prop-types": "warn",
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }
