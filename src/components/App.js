@@ -14,7 +14,7 @@ class App extends Component {
       contacts: [],
   };
 
-  addContact = ([name, number]) => {
+  addContact = ({ name, number }) => {
       const { contacts } = this.state;
       if (contacts.some((contact) => contact.name === name)) {
       // eslint-disable-next-line
