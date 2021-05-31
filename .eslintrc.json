@@ -17,6 +17,6 @@
     "react/jsx-filename-extension": "off",
     "no-nested-ternary": "warn",
     "react/prop-types": "warn",
-    "semi": "error"
+    "linebreak-style": 0
   }
 }
