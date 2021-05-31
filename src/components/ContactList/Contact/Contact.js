@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Contact.module.css';
 
 const Contact = ({
     id, name, number, onDelete,
@@ -9,13 +10,20 @@ const Contact = ({
         .map((string) => string.charAt(0).toUpperCase() + string.slice(1))
         .join(' ');
     return (
-        <li>
-            <span>
+        <li className={styles.Contact}>
+            <span className={styles.span}>
                 {nameToUpperCaseFirstLetter}
                 :
             </span>
-            <span>{number}</span>
-            <button type="button" onClick={() => onDelete(id)}>
+            <span className={styles.span}>
+                {' '}
+                {number}
+            </span>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={() => onDelete(id)}
+            >
                 Delete
             </button>
         </li>
